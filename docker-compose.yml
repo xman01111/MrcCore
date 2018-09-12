@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  mrccore:
+    image: ${DOCKER_REGISTRY}mrccore
+    build:
+      context: .
+      dockerfile: MrcCore/Dockerfile

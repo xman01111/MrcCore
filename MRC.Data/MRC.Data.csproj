@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Chloe" Version="2.27.0" />
+    <PackageReference Include="Chloe.Extension" Version="1.13.0" />
+    <PackageReference Include="Chloe.MySql" Version="2.27.0" />
+    <PackageReference Include="Chloe.Oracle" Version="2.27.0" />
+    <PackageReference Include="Chloe.SQLite" Version="2.27.0" />
+    <PackageReference Include="Chloe.SqlServer" Version="2.27.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
+    <PackageReference Include="MySqlConnector" Version="0.42.1" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.12.0-beta2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MRC.AutoMapper\MRC.AutoMapper.csproj" />
+    <ProjectReference Include="..\MRC.Tools\MRC.ToolsAndEx.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.Annotations">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.0.0\ref\netcoreapp2.0\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,94 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .loginDiv {
+            border: 1px solid #CCCCCC;
+            height: 300px;
+            width: 380px;
+            background: white;
+            box-shadow: -2px 0 5px #CCCCCC, 0 -2px 5px #CCCCCC, 0 2px 5px #CCCCCC, 2px 0 5px #CCCCCC;
+            border-radius: 18px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 250px;
+            overflow: hidden;
+        }
+
+        .head {
+            height: 100px;
+        }
+
+        #account,
+        #password {
+            height: 25px;
+            width: 180px;
+            color: dimgray;
+            text-indent: 10px;
+            font-size: 16px;
+            outline: none;
+            border: 1px solid #CCCCCC;
+            border-radius: 15px
+        }
+
+        #account {
+            position: absolute;
+            margin-left: 100px;
+        }
+
+        #password {
+            position: absolute;
+            margin-left: 100px;
+            margin-top: 70px;
+        }
+
+        .comtent2 {
+            transform: rotateY(180deg) 2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="loginDiv">
+        <div class="head">
+            <div id="" style="height: 70px;width: 70px;border-bottom: 1px solid #CCCCCC;margin-left: auto;margin-right: auto;margin-top: 10px;">
+                <img src="~/images/login/LOGO.png" style="margin-left:-3px;margin-top: 20px;" />
+            </div>
+        </div>
+        <div class="comtent">
+            <img src="~/images/login/user.png" style="position: absolute;height:30px;width: 30px;margin-left: 60px;" />
+            <input type="text" id="account" />
+            <a id="toRg" onclick="torg()" href="javascript:;" style="position: absolute;margin-left: 290px;margin-top: 4px;text-decoration: none;color: #666666;font-family: '微软雅黑';"></a>
+            <img src="~/images/login/pass.png" style="position: absolute;height:30px;width: 30px;margin-left: 60px;margin-top: 70px;" />
+            <input type="password" id="password" />
+            <a id="forgetPwd" href="" style="position: absolute;margin-left: 290px;margin-top: 75px;text-decoration: none;color: #666666;font-family: '微软雅黑';"></a>
+            <input id="login" type="button" value="登录" style="z-index: 0;font-family: '微软雅黑';font-size:14px;color: #666666;position: absolute;width: 120px;height: 30px;border:1px solid #CCCCCC;border-radius: 15px;margin-left: 130px;margin-top: 120px;outline: none;background: white;" />
+        </div>
+        <div class="foot">
+
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/js/jquery-3.3.1.min.js"></script>
+<script src="~/layuiadmin/layui/layui.all.js"></script>
+<script>
+    $("#login").click(function () {
+        $.post("/admin/login/login", { loginName: $("#account").val(), password: $("#password").val() }, function (data) {
+            if (data.status == 100)
+            {
+                layer.msg("登录成功", function () { window.location.href='/admin/home' });
+            }
+            else
+            {
+                layer.msg("登录失败");
+            }
+        });
+    })
+</script>
