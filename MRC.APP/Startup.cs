@@ -105,7 +105,7 @@ namespace MRC.APP
 
             app.UseSession();
             app.UseResponseCaching();
-            app.UseWriteLoginInfo();
+            app.UseWriteLoginInfo();//登陆信息
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

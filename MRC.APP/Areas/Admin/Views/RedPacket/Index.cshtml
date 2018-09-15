@@ -1,0 +1,69 @@
+﻿<link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+<div class="layui-fluid ">
+    <div class="layui-row layui-col-space15 layui-form">
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">输入框</div>
+                <div class="layui-card-body layui-row layui-col-space10">
+                    <div class="layui-col-md12">
+                        <input type="text" name="title" id="Money" placeholder="红包金额" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-col-md12">
+                        <input type="text" name="title" id="Num" placeholder="红包数" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-col-md6">
+                        <select name="RedPacketType" id="RedPacketType" lay-verify="">
+                            <option value="">红包类型</option>
+                            <option value="0">固定红包</option>
+                            <option value="1">拼手气红包</option>
+                        </select>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <select name="RedPacketType" id="WalletType" lay-verify="">
+                            <option value="">选择钱包</option>
+                            <option value="0">ETH</option>
+                            <option value="1">BTC</option>
+                            <option value="2">EOS</option>
+                        </select>
+                    </div>
+
+                    <div class="layui-col-md12">
+                        <input type="password" name="title" placeholder="密码" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-col-md12">
+                        <button class="layui-btn" id="BtnSubmit" lay-submit lay-filter="component-form-element">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/layuiadmin/layui/layui.js"></script>
+
+<script>
+    layui.use(['form'], function () {
+        var $ = layui.$
+            , element = layui.element
+            , form = layui.form;
+        form.on('submit(component-form-element)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+        $("#BtnSubmit").click(function () {
+            $.post('/admin/redpacket/add', { Money: $("#Money").val(), Num: $("#Num").val(), RedPacketType: $("#RedPacketType").val()}, function (data) {
+                layer.msg(data.msg);
+            })
+        })
+    });
+</script>
+
+
+
+
+
+
+

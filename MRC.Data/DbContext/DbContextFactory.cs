@@ -59,7 +59,7 @@ namespace MRC.Data
             return dbContext;
         }
         static IDbContext CreateMySqlContext(string connString)
-        {
+        { 
             MySqlContext dbContext = new MySqlContext(new MySqlConnectionFactory(connString));
             return dbContext;
         }

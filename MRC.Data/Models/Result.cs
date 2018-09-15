@@ -55,7 +55,6 @@ namespace MRC.Data.Models
             result.Data = data;
             return result;
         }
-
     }
 
     public class Result<T> : Result

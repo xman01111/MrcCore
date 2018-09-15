@@ -94,7 +94,7 @@ namespace MRC.APP
                 RedisHelper.Set(token,session.Serialize());
                 this.HttpContext.Response.Cookies.Append("MRCTOKEN", token, new CookieOptions
                 {
-                    Expires = DateTime.Now.AddMinutes(30)
+                    Expires = DateTime.Now.AddHours(2)
                 });
                 this.HttpContext.Items["islogin"] = true;
                 this.HttpContext.Items["user"]= session;
