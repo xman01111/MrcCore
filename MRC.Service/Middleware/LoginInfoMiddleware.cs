@@ -23,7 +23,11 @@ namespace MRC.Service.Middleware
             {
                 string userinfo = EncryptHelper.DesDecrypt(token, KeyTool.GetEncryptKey());
                 string orginInfo = RedisHelper.Get(userinfo);
-                if (orginInfo.IsNullOrEmpty()) return null;
+                if (orginInfo.IsNullOrEmpty())
+                {
+                    context.Items["islogin"] = false;
+                    return this._next(context);
+                };
                 AdminSession userSession = JsonHelper.Deserialize<AdminSession>(orginInfo);
                 if (context.GetClientIP() != userSession.LoginIP)
                 {

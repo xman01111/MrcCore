@@ -87,11 +87,11 @@ namespace MRC.Domain.Service
                 else
                 {
                     Random r = new Random();
-                    decimal min = 0.001M; //
-                    decimal max = this.redpacket.LessMoney / this.redpacket.num * 2;
+                    decimal min = 0.0001M; //
+                    decimal max = this.redpacket.LessMoney/this.redpacket.LessNum * 2;
                     decimal money = (decimal)((decimal)r.NextDouble() * max);
-                    money = money <= min ? 0.001M : money;
-                    money = Math.Floor(money * 1000) / 1000;
+                    money = money <= min ? 0.0001M : money;
+                    money = Math.Floor(money * 10000) / 10000;
                     this.redpacket.LessNum--;
                     this.redpacket.LessMoney -= money;
                     oneMoney = money;

@@ -21,6 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MRC.Domain", "MRC.Domain\MR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSRedisCore", "MRC.Redis\CSRedisCore.csproj", "{517A5D56-FDCA-46E0-A3CA-14B3BAE96108}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRC.LoadTest", "MRC.LoadTest\MRC.LoadTest.csproj", "{9AFD47F0-9A81-4F23-8C1D-B0A8B6938EEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{21B76B78-B297-4D8F-8E30-C8D5CD5FA97E}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +66,10 @@ Global
 		{517A5D56-FDCA-46E0-A3CA-14B3BAE96108}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{517A5D56-FDCA-46E0-A3CA-14B3BAE96108}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{517A5D56-FDCA-46E0-A3CA-14B3BAE96108}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AFD47F0-9A81-4F23-8C1D-B0A8B6938EEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AFD47F0-9A81-4F23-8C1D-B0A8B6938EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AFD47F0-9A81-4F23-8C1D-B0A8B6938EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AFD47F0-9A81-4F23-8C1D-B0A8B6938EEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

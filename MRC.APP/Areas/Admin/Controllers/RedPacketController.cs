@@ -28,7 +28,12 @@ namespace MRC.APP.Areas.Admin.Controllers
             this._redPacketService = RedPacketService;
         }
         [Login]
-        public IActionResult Index()
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Report()
         {
             return View();
         }
@@ -69,28 +74,36 @@ namespace MRC.APP.Areas.Admin.Controllers
         public ActionResult GetRedPacket(string ID)
         {
             Result result = new Result();
-            var redpacketStr=RedisHelper.Get(PrefixKeyHelper.GetRedPacketPK() + ID);
-            if (redpacketStr.IsNullOrEmpty())
+            var redpacketStr2=RedisHelper.Get(PrefixKeyHelper.GetRedPacketPK() + ID);
+            if (redpacketStr2.IsNullOrEmpty())
             {
                 result.Msg = "红包已失效";
                 return Json(result);
             }
-            RedPacket redpacket=JsonHelper.Deserialize<RedPacket>(redpacketStr);
+            RedPacket redpacketTest=JsonHelper.Deserialize<RedPacket>(redpacketStr2);
             RedPacketResult builderResult = new RedPacketResult();
-            if (redpacket.builderStrategy == (int)Data.Enum.EnumRedPacketType.FixedAverage)
-            {
-                BuilderRedPacketsForEqual builder = new BuilderRedPacketsForEqual(redpacket, this.CurrentSession.UserId);
-                builderResult = builder.update();
-            }
-            else if (redpacket.builderStrategy == (int)Data.Enum.EnumRedPacketType.Radom)
-            {
-                BuilderRedPacketsForRadom builder = new BuilderRedPacketsForRadom(redpacket, this.CurrentSession.UserId);
-                builderResult = builder.update();
-            }
-            else
-            {
 
+            for (int i = 0; i < redpacketTest.num; i++)
+            {
+                var redpacketStr = RedisHelper.Get(PrefixKeyHelper.GetRedPacketPK() + ID);
+                RedPacket redpacket = JsonHelper.Deserialize<RedPacket>(redpacketStr);
+                if (redpacket.builderStrategy == (int)Data.Enum.EnumRedPacketType.FixedAverage)
+                {
+                    BuilderRedPacketsForEqual builder = new BuilderRedPacketsForEqual(redpacket, this.CurrentSession.UserId);
+                    builderResult = builder.update();
+                }
+                else if (redpacket.builderStrategy == (int)Data.Enum.EnumRedPacketType.Radom)
+                {
+                    BuilderRedPacketsForRadom builder = new BuilderRedPacketsForRadom(redpacket, this.CurrentSession.UserId);
+                    builderResult = builder.update();
+                }
+                else
+                {
+
+                }
             }
+
+
             if (builderResult.Status == (int)(int)Data.Enum.EnumGetRedPacketStatus.GetOK)
             {
                 result.Msg = "领取成功";
@@ -112,19 +125,31 @@ namespace MRC.APP.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult GetData()
         {
+            List<List<object>> ydata = new List<List<object>>();           
             List<object> xdata = new List<object>();
-            List<object> ydata = new List<object>();
+            int TotalMax = 0;
             int max=1;
-            var listdata111 = RedisHelper.LPop("WWHRP:dfa4e36d-daed-4c9b-820f-7a0933dfc2b1");
-            var list= RedisHelper.Keys("keyWWHRP:*").ToList();
+            var list= RedisHelper.Keys("WWHRP:*").ToList();
             foreach (var item in list)
             {
-              var len = RedisHelper.LLen(item);
-              var listdata=RedisHelper.LRang(item,0, 7);
-              
-            }
-
-            return Json(list);
+                max = 1;
+                List<object> xitem = new List<object>();
+                var xlistdata = RedisHelper.LRang(item,0,-1);
+                foreach (var data in xlistdata)
+                {
+                    HadGetRedPacket model = JsonHelper.Deserialize<HadGetRedPacket>(data);
+                    xitem.Add(model.Money);                    
+                    if (max>TotalMax)
+                    {
+                        xdata.Add(max);
+                        TotalMax = max;
+                    }
+                    max++;
+                }
+                xitem.Reverse();
+                ydata.Add(xitem);
+            }           
+            return Json(new {xdata= xdata, ydata= ydata});
         }
 
     }
