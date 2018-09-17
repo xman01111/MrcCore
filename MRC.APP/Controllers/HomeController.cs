@@ -11,7 +11,7 @@ using MRC.Domain.IService;
 using MRC.Entity;
 using MRC.Service.Application;
 using System.Reflection;
-
+using Microsoft.AspNetCore.Http;
 namespace MRC.APP.Controllers
 {
     public class HomeController :WebBaseController<IUserService>
@@ -26,9 +26,12 @@ namespace MRC.APP.Controllers
         
         public IActionResult Index()
         {
-            string key = "TestAsyncKey:";
-            var value= RedisHelper.Get("TestAsyncKey:1001");
-            return View(); 
+            ViewBag.ip = this.HttpContext.GetClientIP();
+            var LastOne = this.CreateService<IRedPacketService>().GetLast();
+            return View(LastOne);
         }
+
+
+
     }
 }

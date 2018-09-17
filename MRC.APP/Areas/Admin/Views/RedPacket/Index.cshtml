@@ -49,10 +49,6 @@
         var $ = layui.$
             , element = layui.element
             , form = layui.form;
-        form.on('submit(component-form-element)', function (data) {
-            layer.msg(JSON.stringify(data.field));
-            return false;
-        });
         $("#BtnSubmit").click(function () {
             $.post('/admin/redpacket/add', { Money: $("#Money").val(), Num: $("#Num").val(), RedPacketType: $("#RedPacketType").val()}, function (data) {
                 layer.msg(data.msg);
