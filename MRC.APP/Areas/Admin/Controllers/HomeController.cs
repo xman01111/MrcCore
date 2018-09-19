@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Data.SqlClient;
 using MRC.Data;
-
+using Microsoft.AspNetCore.Http;
 namespace MRC.APP.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -32,18 +32,11 @@ namespace MRC.APP.Areas.Admin.Controllers
         }
         
         [Login]
-        public IActionResult Index()
+        public ActionResult Index()
         {
-            Sys_test model = new Sys_test();
-            model.id = IdHelper.CreateSnowflakeId().ToString();
-            model.UUID = model.id;
-            model.UName = "helloworld";
-            _sys_TestService.Add(model);
-
-            
-
-            var list= _userService.GetPermissions("975247111765495808");
-            return View();
+            var LastOne = this.CreateService<IRedPacketService>().GetLast();
+           ViewBag.ip=this.HttpContext.GetClientIP();
+            return View(LastOne);
         }
 
         [Login]

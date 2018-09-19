@@ -1,14 +1,89 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-<div id="jsontext"></div>
+﻿@model MRC.Entity.RedPacket
+<link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+<div class="layui-fluid ">
+    <div class="layui-row layui-col-space15 layui-form">
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">输入框</div>
+                <div class="layui-card-body layui-row layui-col-space10">
 
+                    <div class="layui-col-md12">
+                        <input type="text" placeholder="用户IP" id="ip" autocomplete="off" value="@ViewBag.ip" class="layui-input" readonly>
+                    </div>
+
+                    <div class="layui-col-md12">
+                        <input type="text" placeholder="红包ID" id="Id" autocomplete="off" value="@Model.Id" class="layui-input" readonly>
+                    </div>
+
+                    <div class="layui-col-md12">
+                        <input type="text" name="title" id="Money" placeholder="红包金额" autocomplete="off" value="@Model.totalMoney" class="layui-input">
+                    </div>
+
+                    <div class="layui-col-md12">
+                        <input type="text" name="title" id="Num" placeholder="红包数" value="@Model.num" autocomplete="off" class="layui-input">
+                    </div>
+
+                    <div class="layui-col-md12">
+                        <button class="layui-btn" id="BtnSubmit" lay-submit lay-filter="component-form-element">抢红包</button>
+                        <button type="reset" class="layui-btn layui-btn-primary" id="flushdata">刷新</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6" >
+            <div class="layui-card" id="historylog">
+                灰色分割线
+                <hr class="layui-bg-green">
+            </div>
+        </div>
+    </div>
+</div>
 <script src="~/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-    $(function () { 
+<script src="/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.use(['form'], function () {
+        var $ = layui.$
+            , element = layui.element
+            , form = layui.form;
+        $("#BtnSubmit").click(function () {
+            $.get('/admin/redpacket/GetRedPacket2', { ID: $("#Id").val(), uid:$("#ip").val()}, function (data) {
+                layer.msg(data.msg);
+                if (data.status == 100)
+                {
+                    flush()
+                }
+            })
+        })
+    });
 
-        $.get('http://localhost:18126/Home/GetJson', function (data) {
-            $("#jsontext").html(data.ok);
-         })
+    $(function ()
+    {
+        flush()
     })
+
+    $("#flushdata").click(function () { flush() })
+
+    function flush()
+    {
+      $.get('/admin/redpacket/GetHadList', { ID: '@Model.Id' }, function (res) {
+          var content = '';
+              var i= 1;
+              res.data.forEach(function (value, index) {
+                var item = eval(value)
+                content += ''+i+'&nbsp&nbsp&nbsp<span>用户IP:' + item.uuid + '</span>&nbsp&nbsp&nbsp&nbsp&nbsp<span>金额:' + item.money + '</span>';
+                content += '<hr class="layui-bg-green">';
+                i++
+            });
+            $("#historylog").html(content);
+      })
+    }
+
 </script>
+
+
+
+
+
+
+

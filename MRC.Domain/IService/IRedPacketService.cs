@@ -17,6 +17,7 @@ namespace MRC.Domain.IService
         void Update(RedPacket input);
         void Delete(string id, string operatorId);
         List<RedPacket> GetListById(List<string> ids);
+        RedPacket GetLast();
     }
     public class RedPacketService : AppServiceBase<RedPacket>, IRedPacketService
     {
@@ -43,6 +44,11 @@ namespace MRC.Domain.IService
                 return new List<RedPacket>();
 
             return this.Query.FilterDeleted().Where(a => ids.Contains(a.Id)).ToList();
+        }
+
+        public RedPacket GetLast()
+        {
+            return this.Query.Where(x=>x.CreateTime!=null).OrderByDesc(x=>x.CreateTime).FirstOrDefault();
         }
     }
 

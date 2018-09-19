@@ -17,7 +17,7 @@ namespace MRC.Domain.IService
         void Add(HadGetRedPacket input);
         void Update(HadGetRedPacket input);
         void Delete(string id, string operatorId);
-        List<HadGetRedPacket> GetListById(List<string> ids);
+        List<HadGetRedPacket> GetAllList();
     }
     public class HadGetRedPacketService : AppServiceBase<HadGetRedPacket>, IHadGetRedPacketService
     {
@@ -38,11 +38,9 @@ namespace MRC.Domain.IService
         {
             this.SoftDelete(id, operatorId);
         }
-        public List<HadGetRedPacket> GetListById(List<string> ids)
+        public List<HadGetRedPacket> GetAllList()
         {
-            if (ids.Count == 0)
-                return new List<HadGetRedPacket>();
-            return this.Query.FilterDeleted().Where(a => ids.Contains(a.Id)).ToList();
+            return this.Query.FilterDeleted().Where(a =>a.Id!=null).ToList();
         }
     }
 
