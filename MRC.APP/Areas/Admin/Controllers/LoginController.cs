@@ -50,7 +50,16 @@ namespace MRC.APP.Areas.Admin.Controllers
             session.Name = user.Name;
             session.LoginIP = ip;
             session.IsAdmin = user.AccountName.ToLower() =="admin";
-            this.CurrentSession = session;
+            try
+            {
+                this.CurrentSession = session;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
             
              
             // this.CreateService<ISysLogAppService>().LogAsync(user.Id, user.Name, ip, LogType.Login, moduleName, true, "登录成功");
