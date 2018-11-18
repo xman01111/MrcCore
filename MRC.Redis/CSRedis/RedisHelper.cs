@@ -20,7 +20,7 @@ public abstract partial class RedisHelper {
             {
                 //throw new Exception("使用前请初始化 RedisHelper.Initialization(new CSRedis.CSRedisClient(\"127.0.0.1:6379,pass=123,defaultDatabase=13,poolsize=50,ssl=false,writeBuffer=10240,prefix=key前辍\");");
                 Initialization(
-                csredis: new CSRedis.CSRedisClient("192.168.1.198:6379,pass=123,defaultDatabase=13,poolsize=50,ssl=false,writeBuffer=10240,prefix=key"),
+                csredis: new CSRedis.CSRedisClient("139.199.186.71:6379,password=xman01111,defaultDatabase=13,poolsize=50,ssl=false,writeBuffer=10240,prefix=key"),
                 serialize: value => JsonConvert.SerializeObject(value),
                 deserialize: (data, type) =>JsonConvert.DeserializeObject(data, type));
             }

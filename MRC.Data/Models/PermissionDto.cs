@@ -20,11 +20,11 @@ namespace MRC.Data
         public string Description { get; set; }
         public int? SortCode { get; set; }
     }
-    [MapToType(typeof(SysPermission))]
+    [MapToType(typeof(Sys_Permission))]
     public class AddPermissionInput : AddOrUpdatePermissionInputBase
     {
     }
-    [MapToType(typeof(SysPermission))]
+    [MapToType(typeof(Sys_Permission))]
     public class UpdatePermissionInput : AddOrUpdatePermissionInputBase
     {
         public string Id { get; set; }

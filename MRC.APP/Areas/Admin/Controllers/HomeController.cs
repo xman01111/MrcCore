@@ -34,17 +34,16 @@ namespace MRC.APP.Areas.Admin.Controllers
         [Login]
         public IActionResult Index()
         {
-            Sys_test model = new Sys_test();
-            model.id = IdHelper.CreateSnowflakeId().ToString();
-            model.UUID = model.id;
-            model.UName = "helloworld";
-            _sys_TestService.Add(model);
-
-            
-
-            var list= _userService.GetPermissions("975247111765495808");
             return View();
         }
+
+
+        [Login]
+        public IActionResult cosole()
+        {
+            return View();
+        }
+
 
         [Login]
         [Permission("system.user.add")]
@@ -92,18 +91,20 @@ namespace MRC.APP.Areas.Admin.Controllers
             IUserService userService = this.CreateService<IUserService>();
             IPermissionService authService = this.CreateService<IPermissionService>();
 
-            Dictionary<string, SysPermission> userPermissionDic = null;
+            
+
+            Dictionary<string, Sys_Permission> userPermissionDic = null;
             if (!this.CurrentSession.IsAdmin)
             {
-                List<SysPermission> userPermissions = userService.GetUserPermissions(this.CurrentSession.UserId);
+                List<Sys_Permission> userPermissions = userService.GetUserPermissions(this.CurrentSession.UserId);
                 userPermissionDic = userPermissions.ToDictionary(a => a.Id);
             }
 
-            List<SysPermission> permissionMenus = authService.GetPermissionMenus();
+            List<Sys_Permission> permissionMenus = authService.GetPermissionMenus();
 
-            List<SysPermission> parentPermissions = permissionMenus.Where(a => a.ParentId == null).ToList();
+            List<Sys_Permission> parentPermissions = permissionMenus.Where(a => a.ParentId == null).ToList();
 
-            foreach (SysPermission item in parentPermissions)
+            foreach (Sys_Permission item in parentPermissions)
             {
                 PermissionMenu permissionMenu = PermissionMenu.Create(item);
 
@@ -119,10 +120,10 @@ namespace MRC.APP.Areas.Admin.Controllers
             return ret;
         }
 
-        void GatherChildMenus(List<SysPermission> permissions, SysPermission permission, List<PermissionMenu> list, Dictionary<string, SysPermission> userPermissionDic)
+        void GatherChildMenus(List<Sys_Permission> permissions, Sys_Permission permission, List<PermissionMenu> list, Dictionary<string, Sys_Permission> userPermissionDic)
         {
             var childPermissions = permissions.Where(a => a.ParentId == permission.Id).OrderBy(a => a.SortCode);
-            foreach (SysPermission childPermission in childPermissions)
+            foreach (Sys_Permission childPermission in childPermissions)
             {
                 if (childPermission.Type == PermissionType.节点组)
                 {
@@ -152,7 +153,7 @@ namespace MRC.APP.Areas.Admin.Controllers
         public int SortCode { get; set; }
         public List<PermissionMenu> Children { get; set; } = new List<PermissionMenu>();
 
-        public static PermissionMenu Create(SysPermission permission)
+        public static PermissionMenu Create(Sys_Permission permission)
         {
             PermissionMenu ret = new PermissionMenu()
             {

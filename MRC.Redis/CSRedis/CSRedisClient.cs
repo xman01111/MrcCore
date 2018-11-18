@@ -35,6 +35,7 @@ namespace CSRedis {
 					RedisClient rc = s as RedisClient;
 				};
 				if (ClusterNodes.ContainsKey(pool.ClusterKey)) throw new Exception($"ClusterName: {pool.ClusterKey} 重复，请检查");
+                
 				ClusterNodes.Add(pool.ClusterKey, pool);
 			}
 			_clusterKeys = ClusterNodes.Keys.ToList();

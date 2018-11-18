@@ -49,6 +49,14 @@ namespace MRC.Service.Application
             return entity;
         }
 
+
+        protected void SoftDelete<T>(object id, object operatorId)
+        {
+            id.NotNullOrEmpty();
+            this.DbContext.SoftDelete<T>(id, operatorId);
+        }
+
+
         public void Dispose()
         {
             if (this.DbContext != null)

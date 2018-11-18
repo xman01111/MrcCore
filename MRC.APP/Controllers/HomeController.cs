@@ -11,6 +11,7 @@ using MRC.Domain.IService;
 using MRC.Entity;
 using MRC.Service.Application;
 using System.Reflection;
+using CSRedis;
 
 namespace MRC.APP.Controllers
 {
@@ -27,7 +28,21 @@ namespace MRC.APP.Controllers
         public IActionResult Index()
         {
             string key = "TestAsyncKey:";
-            var value= RedisHelper.Get("TestAsyncKey:1001");
+
+                try
+                {
+                    RedisClient redis = new RedisClient("139.199.186.71", 6379);
+                    redis.Auth("xman01111");
+                    redis.Select(13);
+                    var keys= redis.Scan(18);
+                    var allKey=redis.Keys("*");
+                    string result = redis.Ping();
+                    redis.Quit();
+                }
+                catch (Exception ex)
+                {
+                    string s = ex.Message;
+                }
             return View(); 
         }
     }

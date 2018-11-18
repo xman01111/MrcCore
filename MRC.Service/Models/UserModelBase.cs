@@ -22,6 +22,10 @@ namespace MRC.Service.Models
         public string Roles { get; set; }
         public string Orgs { get; set; }
         public string Posts { get; set; }
+
+        public string CreateUserId { get; set; }
+        
+
         public List<string> GetRoles()
         {
             return this.Roles.SplitString(',');

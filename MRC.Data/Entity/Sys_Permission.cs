@@ -25,7 +25,7 @@ namespace MRC.Entity
         节点组 = 4,
     }
     [Table("Sys_Permission")]
-    public class SysPermission
+    public class Sys_Permission
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -40,7 +40,7 @@ namespace MRC.Entity
         public string Description { get; set; }
         public int? SortCode { get; set; }
 
-        public List<SysPermission> Children { get; set; } = new List<SysPermission>();
+        public List<Sys_Permission> Children { get; set; } = new List<Sys_Permission>();
 
         public int GetSortCode(int nullIf = 999)
         {

@@ -35,7 +35,7 @@ namespace MRC.Domain.IService
         void SetPermission(string id, List<string> permissionList);
         PagedData<Sys_User> GetPageData(Pagination page, string keyword);
 
-        List<SysPermission> GetUserPermissions(string id);
+        List<Sys_Permission> GetUserPermissions(string id);
         List<string> GetUserPermits(string id);
     }
 
@@ -413,9 +413,9 @@ namespace MRC.Domain.IService
             return pagedData;
         }
 
-        public List<SysPermission> GetUserPermissions(string id)
+        public List<Sys_Permission> GetUserPermissions(string id)
         {
-            List<SysPermission> ret = new List<SysPermission>();
+            List<Sys_Permission> ret = new List<Sys_Permission>();
 
             List<string> userPermissionIds = this.DbContext.Query<Sys_UserPermission>().Where(a => a.UserId == id).Select(a => a.PermissionId).ToList();
 
@@ -435,7 +435,7 @@ namespace MRC.Domain.IService
 
             List<string> permissionIds = userPermissionIds.Concat(rolePermissionIds).Concat(orgPermissionIds).Distinct().ToList();
 
-            ret = this.DbContext.Query<SysPermission>().Where(a => permissionIds.Contains(a.Id)).ToList();
+            ret = this.DbContext.Query<Sys_Permission>().Where(a => permissionIds.Contains(a.Id)).ToList();
 
             return ret;
         }
